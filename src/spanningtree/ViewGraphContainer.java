@@ -35,7 +35,7 @@ public class ViewGraphContainer extends Canvas {
         int x, y;
         int w = 25;
 
-        g.drawString("Hasil dapat dilihat di console.", size.width/3, size.height-10);
+        g.drawString("Hasil dapat dilihat di output console.", size.width/3, size.height-10);
         
         int dw = 6, dh = 5;
         

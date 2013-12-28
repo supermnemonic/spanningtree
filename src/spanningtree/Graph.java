@@ -73,6 +73,18 @@ public class Graph {
         return minEdges;
     }
 
+    /*
+     * fungsi ini menggunakan algoritma PRIM:
+     * 1. node awal, N_i, dipilih dan dijadikan perameter masukkan. 
+     *    tandai kemudian push ke list minNodes[]. 
+     *    (minNodes adalah array-list yg berisi node2 dg jarak terpendek yg -
+     *    sudah dikunjungi.)
+     * 2. loop semua node, N_i, dalam minNodes[].
+     * 3. cari node dg jarak minimum dan yg belum dikunjungi, dari semua node yg -
+     *    berhubungan langsung dg N_i dalam minNodes[].
+     * 4. tandai masukkan node dg jarak minimum tsb ke list minNodes[].
+     * 5. ulangi langkah 2 sampai semua node sudah ditandai.
+     */
     public List[] getMinSpanningTree(Node startNode) {
         List[] en = new List[2];
 
@@ -83,22 +95,37 @@ public class Graph {
 
         List<Node> minNodes = new ArrayList<Node>();
         List<Edge> minEdges = new ArrayList<Edge>();
+        
+        // node awal ditandai dan dimasukkan ke minNodes[].
         minNodes.add(startNode);
         startNode.setVisited(true);
         int length = 0;
         do {
+            // penampung sementara kandidat node & edge terpendek.
             Node minNodeCandidate = null;
             Edge minEdgeCandidate = null;
             int nodesSize = minNodes.size();
+            
+            // looping semua node dalam minNodes[].
             for (int i = 0; i < nodesSize; i++) {
+                
+                // looping semua node yg adjecent dg N_i dlm minNodes[].
                 Node visitingNode = minNodes.get(i);
                 List<Edge> adjEdges = visitingNode.getAdjEdges();
                 for (Edge adjEdge : adjEdges) {
                     Node adjNode = visitingNode.getNodeByEdge(adjEdge);
+                    
+                    // jika sudah dikunjungi, skip ke node berikutnya.
                     if (adjEdge.isVisited() || adjNode.isVisited()) {
                         continue;
                     }
 
+                    // Jika kandidat jalur terpendek belum ada, maka node/edge -
+                    // pertama yg ditelusuri dijadikan sebagai kandidat jalur -
+                    // terpendek awal.
+                    // Jika sudah ada kandidatnya, periksa apakah node yg sedang -
+                    // dikunjungi memiliki jarak lebih pendek dari kandidat node/edge -
+                    // sebelumnya, maka kandidat node/edge lama digantikan yg baru.
                     if (minEdgeCandidate == null) {
                         minEdgeCandidate = adjEdge;
                         minNodeCandidate = adjNode;
@@ -109,6 +136,7 @@ public class Graph {
                 }
             }
             
+            // node/edge yg dianggap terpendek ditandai. push ke list minNodes[].
             if (minNodeCandidate != null && minEdgeCandidate != null) {
                 minEdges.add(minEdgeCandidate); minEdgeCandidate.setVisited(true);
                 minNodes.add(minNodeCandidate); minNodeCandidate.setVisited(true);

@@ -46,7 +46,7 @@ public class SpanningTree {
         g.connectNodes(nodes.get(6), nodes.get(8), 8);
         g.connectNodes(nodes.get(7), nodes.get(8), 1);
         
-        System.out.println("Minimum Spanning Tree:");
+        System.out.println("Minimum Spanning Tree menggunakan PRIM:");
         for (Node node : nodes) {
             System.out.print("dari("+node.getNumber()+"):");
             g.resetGraph();
@@ -54,12 +54,14 @@ public class SpanningTree {
         }
         System.out.println();
         
+        /*
         System.out.println("Maximum Spanning Tree:");
         for (Node node : nodes) {
             System.out.print("dari("+node.getNumber()+"):");
             g.resetGraph();
             g.getMaxSpanningTree(node);
         }
+        */
                 
         ViewMainFrame graphViewer = new ViewMainFrame(new ViewGraphContainer(g));
     }
